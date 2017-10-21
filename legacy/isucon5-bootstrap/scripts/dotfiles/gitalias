@@ -1,0 +1,19 @@
+[alias]
+    alias = !git config --list | grep 'alias\\.' | sed 's/alias\\.\\([^=]*\\)=\\(.*\\)/\\1\\\t => \\2/'
+    a  = add --verbose
+    ad = add .
+    br = branch
+    ba = branch -a
+    bn = branch --no-merged
+    ci = commit -am
+    cm = commit -m
+    co = checkout
+    di = diff
+    dw = diff --word-diff=color
+    db = diff -b
+    lg = log --graph --date=short --pretty=format:'%Cgreen%h %cd %Cblue%cn \n %Creset%s'
+    sh = show
+    st = status
+    wc = whatchanged --graph
+    lv = log --graph --date=iso --pretty=format:'%Cgreen%cd %Cblue%cn %Cred%h\n  %Creset%s' --name-status
+    gr = grep -C 3 -i -n --color=auto

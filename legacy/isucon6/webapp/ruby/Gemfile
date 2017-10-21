@@ -1,0 +1,19 @@
+source 'https://rubygems.org'
+
+ruby File.read('.ruby-version').strip
+
+gem 'erubis'
+gem 'mysql2'
+gem 'mysql2-cs-bind'
+gem 'sinatra'
+gem 'unicorn'
+gem 'newrelic_rpm', require: false
+gem 'pry', require: false
+gem "hiredis", "~> 0.6.1"
+gem "redis", ">= 3.2.0", :require => ["redis", "redis/connection/hiredis"]
+gem "rack-lineprof", require: false
+
+group :development do
+  gem 'foreman'
+  gem 'sinatra-contrib', require: nil
+end

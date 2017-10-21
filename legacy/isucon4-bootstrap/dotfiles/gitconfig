@@ -1,0 +1,12 @@
+[color]
+  ui = true
+  diff = auto
+  status = auto
+  branch = auto
+
+[include]
+    path = ~/.gitalias
+    path = ~/.gituser
+
+[pull]
+   rebase = true
