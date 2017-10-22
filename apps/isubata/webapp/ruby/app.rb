@@ -133,9 +133,13 @@ class App < Sinatra::Base
     statement.close
 
     # Load nested users (sub, to resolve N+1)
-    statement = db.prepare("SELECT id, name, display_name, avatar_icon FROM user WHERE id IN (#{rows.length.times.map { '?' }.join(',')})")
-    user_rows = statement.execute(*rows.map { |r| r['user_id'] }).to_a
-    statement.close
+    if rows.length > 0
+      statement = db.prepare("SELECT id, name, display_name, avatar_icon FROM user WHERE id IN (#{rows.length.times.map { '?' }.join(',')})")
+      user_rows = statement.execute(*rows.map { |r| r['user_id'] }).to_a
+      statement.close
+    else
+      user_rows = []
+    end
 
     response = []
     rows.each do |row|
