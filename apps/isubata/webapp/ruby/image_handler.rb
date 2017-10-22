@@ -14,5 +14,11 @@ class ImageHandler
         File.join(DIR, name).to_s
       )
     end
+
+    def read_data(name)
+      open(
+        File.join(DIR, name).to_s, 'r'
+      ).read
+    end
   end
 end
