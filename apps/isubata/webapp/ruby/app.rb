@@ -1,7 +1,7 @@
 require 'digest/sha1'
 require 'mysql2'
 require 'sinatra/base'
-require 'newrelic_rpm'
+#require 'newrelic_rpm'
 #require 'rack-lineprof'
 
 class App < Sinatra::Base
