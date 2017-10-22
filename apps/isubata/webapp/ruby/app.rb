@@ -401,12 +401,8 @@ class App < Sinatra::Base
     messages
   end
 
-  def random_string(n)
-    Array.new(20).map { (('a'..'z').to_a + ('A'..'Z').to_a + ('0'..'9').to_a).sample }.join
-  end
-
   def register(user, password)
-    salt = random_string(20)
+    salt = 'salt'
     pass_digest = Digest::SHA1.hexdigest(salt + password)
     statement = db.prepare('INSERT INTO user (name, salt, password, display_name, avatar_icon, created_at) VALUES (?, ?, ?, ?, ?, NOW())')
     statement.execute(user, salt, pass_digest, user, 'default.png')
