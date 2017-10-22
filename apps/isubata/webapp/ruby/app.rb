@@ -2,8 +2,12 @@ require 'digest/sha1'
 require 'mysql2'
 require 'sinatra/base'
 #require 'newrelic_rpm'
+#require 'rack-lineprof'
 
 class App < Sinatra::Base
+  # curl 'http://localhost:9292/fetch?lineprof=app.rb' ...
+  #use Rack::Lineprof
+
   configure do
     set :session_secret, 'tonymoris'
     set :public_folder, File.expand_path('../../public', __FILE__)
