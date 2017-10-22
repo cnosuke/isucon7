@@ -31,7 +31,7 @@ common: &default_settings
 # If your application has other named environments, configure them here.
 development:
   <<: *default_settings
-  app_name: isucon7-2
+  app_name: isucon7-6
   monitor_mode: false
   agent_enabled: false
 
