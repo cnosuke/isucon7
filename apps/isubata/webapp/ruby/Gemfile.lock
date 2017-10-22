@@ -3,7 +3,6 @@ GEM
   specs:
     backports (3.9.1)
     coderay (1.1.2)
-    debugger-ruby_core_source (1.3.8)
     method_source (0.9.0)
     multi_json (1.12.2)
     mustermann (1.0.1)
@@ -14,14 +13,8 @@ GEM
       method_source (~> 0.9.0)
     puma (3.10.0)
     rack (2.0.3)
-    rack-lineprof (0.0.2)
-      rack
-      rblineprof (~> 0.3.1)
-      term-ansicolor
     rack-protection (2.0.0)
       rack
-    rblineprof (0.3.7)
-      debugger-ruby_core_source (~> 1.3)
     sinatra (2.0.0)
       mustermann (~> 1.0)
       rack (~> 2.0)
@@ -34,10 +27,8 @@ GEM
       rack-protection (= 2.0.0)
       sinatra (= 2.0.0)
       tilt (>= 1.3, < 3)
-    term-ansicolor (1.6.0)
-      tins (~> 1.0)
+    stackprof (0.2.10)
     tilt (2.0.8)
-    tins (1.15.0)
 
 PLATFORMS
   ruby
@@ -47,9 +38,9 @@ DEPENDENCIES
   newrelic_rpm
   pry
   puma
-  rack-lineprof
   sinatra
   sinatra-contrib
+  stackprof
 
 BUNDLED WITH
    1.15.4

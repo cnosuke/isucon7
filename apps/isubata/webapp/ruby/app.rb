@@ -10,6 +10,12 @@ class App < Sinatra::Base
   # curl 'http://localhost:9292/fetch?lineprof=app.rb' ...
   #use Rack::Lineprof
 
+  require_relative './periodic_profiler'
+  use StackProf::PeriodicProfiler,
+    profile_interval_seconds: 1,
+    sampling_interval_microseconds: 1000,
+    result_directory: '/tmp'
+
   configure do
     set :session_secret, 'tonymoris'
     set :public_folder, File.expand_path('../../public', __FILE__)

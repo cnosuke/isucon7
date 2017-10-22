@@ -5,6 +5,7 @@ gem 'puma'
 gem 'sinatra'
 gem 'sinatra-contrib'
 gem 'newrelic_rpm'
-gem 'rack-lineprof'
+#gem 'rack-lineprof'
+gem 'stackprof'
 
 gem 'pry'
