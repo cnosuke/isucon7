@@ -219,8 +219,14 @@ class App < Sinatra::Base
     @messages = []
 
     user_ids = rows.map { |r| r['user_id'] }.uniq
-    user_statement = db.prepare("SELECT id, name, display_name, avatar_icon FROM user WHERE id IN (#{user_ids.length.times.map{ '?' }.join(',')})")
-    user_rows = user_statement.execute(*user_ids)
+
+    if user_ids.length > 0
+      user_statement = db.prepare("SELECT id, name, display_name, avatar_icon FROM user WHERE id IN (#{user_ids.length.times.map{ '?' }.join(',')})")
+      user_rows = user_statement.execute(*user_ids)
+      user_statement.close
+    else
+      user_rows = []
+    end
 
     rows.each do |row|
       r = {}
@@ -230,7 +236,6 @@ class App < Sinatra::Base
       r['content'] = row['content']
       @messages << r
     end
-    user_statement.close
     @messages.reverse!
 
     statement = db.prepare('SELECT COUNT(*) as cnt FROM message WHERE channel_id = ?')
