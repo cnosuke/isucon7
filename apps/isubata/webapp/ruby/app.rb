@@ -222,7 +222,7 @@ class App < Sinatra::Base
 
     if user_ids.length > 0
       user_statement = db.prepare("SELECT id, name, display_name, avatar_icon FROM user WHERE id IN (#{user_ids.length.times.map{ '?' }.join(',')})")
-      user_rows = user_statement.execute(*user_ids)
+      user_rows = user_statement.execute(*user_ids).to_a
       user_statement.close
     else
       user_rows = []
