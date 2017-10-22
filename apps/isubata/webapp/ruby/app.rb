@@ -244,15 +244,16 @@ class App < Sinatra::Base
     @channels, = get_channel_list_info
 
     user_name = params[:user_name]
-    statement = db.prepare('SELECT * FROM user WHERE name = ?')
-    @user = statement.execute(user_name).first
-    statement.close
+    unless @self_profile = (user['name'] == user_name)
+      statement = db.prepare('SELECT * FROM user WHERE name = ?')
+      @user = statement.execute(user_name).first
+      statement.close
 
-    if @user.nil?
-      return 404
+      if @user.nil?
+        return 404
+      end
     end
 
-    @self_profile = user['id'] == @user['id']
     erb :profile
   end
 
