@@ -402,8 +402,8 @@ class App < Sinatra::Base
   end
 
   def register(user, password)
-    salt = 'salt'
-    pass_digest = Digest::SHA1.hexdigest(salt + password)
+    salt = 'salt'.freeze
+    pass_digest = Digest::SHA1.hexdigest(salt + password).freeze
     statement = db.prepare('INSERT INTO user (name, salt, password, display_name, avatar_icon, created_at) VALUES (?, ?, ?, ?, ?, NOW())')
     statement.execute(user, salt, pass_digest, user, 'default.png')
     row = db.query('SELECT LAST_INSERT_ID() AS last_insert_id').first
