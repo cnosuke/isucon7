@@ -217,16 +217,20 @@ class App < Sinatra::Base
     rows = statement.execute(@channel_id, n, (@page - 1) * n).to_a
     statement.close
     @messages = []
+
+    user_ids = rows.map { |r| r['user_id'] }.uniq
+    user_statement = db.prepare("SELECT id, name, display_name, avatar_icon FROM user WHERE id IN (#{user_ids.length.times.map{ '?' }.join(',')})")
+    user_rows = user_statement.execute(*user_ids)
+
     rows.each do |row|
       r = {}
       r['id'] = row['id']
-      statement = db.prepare('SELECT name, display_name, avatar_icon FROM user WHERE id = ?')
-      r['user'] = statement.execute(row['user_id']).first
+      r['user'] = user_rows.find { |r| r['id'] == row['user_id']}
       r['date'] = row['created_at'].strftime("%Y/%m/%d %H:%M:%S")
       r['content'] = row['content']
       @messages << r
-      statement.close
     end
+    user_statement.close
     @messages.reverse!
 
     statement = db.prepare('SELECT COUNT(*) as cnt FROM message WHERE channel_id = ?')
