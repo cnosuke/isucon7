@@ -175,12 +175,20 @@ class App < Sinatra::Base
     channel_ids = rows.map { |row| row['id'] }
 
     res = []
-    channel_ids.each do |channel_id|
-      statement = db.prepare('SELECT message_id FROM haveread WHERE user_id = ? AND channel_id = ?')
-      row = statement.execute(user_id, channel_id).first
+
+    # resolve N+1
+    if channel_ids.length > 0
+      statement = db.prepare("SELECT message_id, channel_id FROM haveread WHERE user_id = ? AND channel_id IN (#{channel_ids.map { '?' }.join(',')})")
+      havereads = statement.execute(user_id, *channel_ids).to_a
       statement.close
+    else
+      havereads = []
+    end
+
+    channel_ids.each do |channel_id|
       r = {}
       r['channel_id'] = channel_id
+      row = havereads.find { |haveread| haveread['channel_id'] == channel_id }
       r['unread'] = if row.nil?
         statement = db.prepare('SELECT COUNT(*) as cnt FROM message WHERE channel_id = ?')
         statement.execute(channel_id).first['cnt']
