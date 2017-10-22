@@ -245,7 +245,7 @@ class App < Sinatra::Base
 
     user_name = params[:user_name]
     unless @self_profile = (user['name'] == user_name)
-      statement = db.prepare('SELECT * FROM user WHERE name = ?')
+      statement = db.prepare('SELECT name, display_name, avatar_icon FROM user WHERE name = ? LIMIT 1')
       @user = statement.execute(user_name).first
       statement.close
 
