@@ -126,19 +126,25 @@ class App < Sinatra::Base
 
     channel_id = params[:channel_id].to_i
     last_message_id = params[:last_message_id].to_i
+
+    # Load messages (main)
     statement = db.prepare('SELECT * FROM message WHERE id > ? AND channel_id = ? ORDER BY id DESC LIMIT 100')
     rows = statement.execute(last_message_id, channel_id).to_a
     statement.close
+
+    # Load nested users (sub, to resolve N+1)
+    statement = db.prepare("SELECT id, name, display_name, avatar_icon FROM user WHERE id IN (#{rows.length.times.map { '?' }.join(',')})")
+    user_rows = statement.execute(*rows.map { |r| r['user_id'] }).to_a
+    statement.close
+
     response = []
     rows.each do |row|
       r = {}
       r['id'] = row['id']
-      statement = db.prepare('SELECT name, display_name, avatar_icon FROM user WHERE id = ?')
-      r['user'] = statement.execute(row['user_id']).first
+      r['user'] = user_rows.find { |u| u['id'] == row['user_id'] }
       r['date'] = row['created_at'].strftime("%Y/%m/%d %H:%M:%S")
       r['content'] = row['content']
       response << r
-      statement.close
     end
     response.reverse!
 
