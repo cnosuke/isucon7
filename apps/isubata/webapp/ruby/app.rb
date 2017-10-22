@@ -165,9 +165,9 @@ class App < Sinatra::Base
 
     max_message_id = rows.empty? ? 0 : rows.map { |row| row['id'] }.max
     statement = db.prepare([
-      'INSERT INTO haveread (user_id, channel_id, message_id, updated_at, created_at) ',
-      'VALUES (?, ?, ?, NOW(), NOW()) ',
-      'ON DUPLICATE KEY UPDATE message_id = ?, updated_at = NOW()',
+      'INSERT INTO haveread (user_id, channel_id, message_id) ',
+      'VALUES (?, ?, ?) ',
+      'ON DUPLICATE KEY UPDATE message_id = ?',
     ].join)
     statement.execute(user_id, channel_id, max_message_id, max_message_id)
     statement.close
