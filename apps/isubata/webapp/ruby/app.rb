@@ -308,7 +308,7 @@ class App < Sinatra::Base
     if name.nil? || description.nil?
       return 400
     end
-    statement = db.prepare('INSERT INTO channel (name, description, updated_at, created_at) VALUES (?, ?, NOW(), NOW())')
+    statement = db.prepare('INSERT INTO channel (name, description) VALUES (?, ?)')
     statement.execute(name, description)
     channel_id = db.last_id
     statement.close
