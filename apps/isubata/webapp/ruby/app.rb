@@ -72,6 +72,7 @@ class App < Sinatra::Base
     erb :channel
   end
 
+  # ローカルで動かすように残してあるが、実際は静的なHTMLを直接返すように直してある
   get '/register' do
     erb :register
   end
