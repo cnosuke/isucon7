@@ -16,7 +16,7 @@ common: &default_settings
 
   # Your application name. Renaming here affects where data displays in New
   # Relic.  For more details, see https://docs.newrelic.com/docs/apm/new-relic-apm/maintenance/renaming-applications
-  app_name: isucon7-x
+  app_name: isucon7-4
 
   # To disable the agent regardless of other settings, uncomment the following:
   monitor_mode: true
