@@ -97,6 +97,7 @@ class App < Sinatra::Base
     if row.nil? || row['password'] != Digest::SHA1.hexdigest(row['salt'] + params[:password])
       return 403
     end
+    statement.close
     session[:user_id] = row['id']
     redirect '/', 303
   end
@@ -127,6 +128,7 @@ class App < Sinatra::Base
     last_message_id = params[:last_message_id].to_i
     statement = db.prepare('SELECT * FROM message WHERE id > ? AND channel_id = ? ORDER BY id DESC LIMIT 100')
     rows = statement.execute(last_message_id, channel_id).to_a
+    statement.close
     response = []
     rows.each do |row|
       r = {}
@@ -147,6 +149,7 @@ class App < Sinatra::Base
       'ON DUPLICATE KEY UPDATE message_id = ?, updated_at = NOW()',
     ].join)
     statement.execute(user_id, channel_id, max_message_id, max_message_id)
+    statement.close
 
     content_type :json
     response.to_json
