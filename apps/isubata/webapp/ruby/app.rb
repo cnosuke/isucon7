@@ -324,6 +324,8 @@ class App < Sinatra::Base
     redirect '/', 303
   end
 
+  # 画像ファイルはnginxが返すようにしたのでこのエンドポイントは使ってない！！！
+  # ただしローカルでは動かしたいので残してある。
   get '/icons/:file_name' do
     file_name = params[:file_name]
 
