@@ -51,6 +51,7 @@ class App < Sinatra::Base
     db.query("DELETE FROM image WHERE id > 1001")
     db.query("DELETE FROM channel WHERE id > 10")
     db.query("DELETE FROM message WHERE id > 10000")
+    db.query("ALTER TABLE message AUTO_INCREMENT = 10001")
     db.query("DELETE FROM haveread")
     204
   end
