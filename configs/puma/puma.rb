@@ -8,4 +8,4 @@ environment ENV.fetch("SINATRA_ENV") { 'production' }
 
 plugin :tmp_restart
 
-bind ENV.fetch("SINATRA_BIND") { '/tmp/puma.sock' }
+bind ENV.fetch("SINATRA_BIND") { 'unix:///tmp/puma.sock' }
