@@ -33,4 +33,4 @@ DEPENDENCIES
   sinatra-contrib
 
 BUNDLED WITH
-   1.13.7
+   1.15.4
