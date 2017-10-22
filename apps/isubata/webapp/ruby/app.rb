@@ -128,7 +128,7 @@ class App < Sinatra::Base
     last_message_id = params[:last_message_id].to_i
 
     # Load messages (main)
-    statement = db.prepare('SELECT * FROM message WHERE id > ? AND channel_id = ? ORDER BY id DESC LIMIT 100')
+    statement = db.prepare('SELECT id, user_id, content, created_at FROM message WHERE id > ? AND channel_id = ? ORDER BY id DESC LIMIT 100')
     rows = statement.execute(last_message_id, channel_id).to_a
     statement.close
 
