@@ -1,1 +1,0 @@
-# isucon5-bootstrap
